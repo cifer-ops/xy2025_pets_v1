@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <!-- Breadcrumb Area Start -->
+    <div class="section breadcrumb-area bg-name-bright">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="breadcrumb-wrapper">
+                        <h2 class="breadcrumb-title">Pet Details</h2>
+                        <ul>
+                            <li><a href="/">Home</a></li>
+{#                            <li>Pets Details</li>#}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Area End -->
+
+    <!-- Blog Details Section Start -->
+    <div class="section section-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9 m-auto overflow-hidden">
+                    <!-- Blog Details Wrapper Start -->
+                    <div class="blog-details-wrapper">
+
+                        <!-- Blog Details Content Start -->
+                        <div class="blog-details-content">
+
+                            <!-- Blog Image Start -->
+                            <div class="blog-image" style="text-align:center;">
+                                <img style="width: 60%;height: 300px" src="/media/{{ pet.showimg }}" alt="Blog Image" class="fit-image">
+                            </div>
+                            <!-- Blog Image End -->
+
+                            <!-- Blog details title & Meta Start -->
+                            <div class="blog-details-title-meta" style="text-align:center;">
+                                <h2 class="title" >{{ pet.name }}</h2>
+                                <h5>{{ pet.atype }} -- {{ pet.area }} -- {{ pet.age }} year</h5>
+                                <h6>status:{{ pet.get_status_display }}</h6>
+                                <ul class="blog-meta" >
+
+                                </ul>
+                            </div>
+                            <!-- Blog details title & Meta End -->
+
+                            <!-- Content Start -->
+                                {{ pet.intro | safe }}
+                            <!-- Content End -->
+
+
+                        </div>
+                        <!-- Blog Details Content End -->
+
+
+
+                        <!-- Comments Post Area Start -->
+                        <div class="comment-post-area">
+                            <form action="#">
+                                <div class="row">
+
+                                    <!-- Name Input Start -->
+
+                                    <!-- Submit Button Start -->
+                                    {% if pet.status != '2' %}
+                                        <div class="col-12 col-custom m-t-20" style="text-align: center">
+                                            <button type="button" class="btn btn-primary btn-hover-dark" onclick="adopt('{{ pet.id }}')">Adopt</button>
+                                            <button type="button" class="btn btn-primary btn-hover-dark" onclick="colliect('{{ pet.id }}')">Collect</button>
+                                        </div>
+                                    {% endif %}
+                                    <!-- Submit Button End -->
+
+
+                                </div>
+                            </form>
+                        </div>
+                        <!-- Comments Post Area End -->
+
+                    </div>
+                    <!-- Blog Details Wrapper End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Blog Details Section End -->
+
+    <script>
+
+     function colliect(wid) {
+            var csrf = "{{ csrf_token  }}"
+            $.ajax({
+                      type: 'POST',
+                      url: '/add_collect',
+                      data: JSON.stringify({"id":wid, "csrfmiddlewaretoken":csrf}),
+                      dataType: "json",
+                      contentType: 'application/json;charset=utf-8',
+                      success: function(data) {
+                        if(data.status == "0"){
+                             alert(data.data)
+                        }else{
+                            //服务器删除失败，提示错误信息，刷新页面
+                            alert(data.data)
+                        }
+                      },
+                      error: function(xhr) {
+                            //中间发生异常，查看xhr.responseText
+                          alert("系统错误")
+                      }
+                    });
+
+        }
+
+    function adopt(wid) {
+            $.ajax({
+                      type: 'POST',
+                      url: '/add_adoption',
+                      data: JSON.stringify({"id":wid}),
+                      dataType: "json",
+                      contentType: 'application/json;charset=utf-8',
+                      success: function(data) {
+                        if(data.status == "0"){
+                            alert(data.data)
+                            location.reload();
+                        }else{
+                            //服务器删除失败，提示错误信息，刷新页面
+                            alert(data.data)
+                        }
+                      },
+                      error: function(xhr) {
+                            //中间发生异常，查看xhr.responseText
+                          layer.msg("失败")
+                      }
+                    });
+
+        }
+
+    </script>
+{% endblock %}

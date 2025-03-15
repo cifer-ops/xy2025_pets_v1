@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>灰色调宠物用品网站</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #333; /* 深灰色背景 */
+            color: #ccc; /* 浅灰色文字 */
+        }
+        header {
+            background-color: #555; /* 中灰色横幅背景 */
+            padding: 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            color: #999; /* 深灰色文字 */
+        }
+        nav {
+            margin: 20px 0;
+            text-align: center;
+        }
+        nav a {
+            color: #ddd; /* 浅灰色链接 */
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.2em;
+        }
+        nav a:hover {
+            color: #fff; /* 白色悬停效果 */
+        }
+        .content {
+            padding: 20px;
+            text-align: center;
+        }
+        .content p {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        .content img {
+            max-width: 100%;
+            height: auto;
+            filter: grayscale(100%); /* 将图像变为灰色 */
+        }
+        footer {
+            background-color: #444; /* 稍浅的深灰色底部背景 */
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        footer button {
+            background-color: #666; /* 中灰色按钮背景 */
+            color: #fff; /* 白色按钮文字 */
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        footer button:hover {
+            background-color: #777; /* 稍深的灰色悬停效果 */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>PetHome</h1>
+    </header>
+    <nav>
+        <a href="#">HOME</a>
+        <a href="#">ADOPT PETS</a>
+        <a href="#">MY ACCOUNTS</a>
+    </nav>
+    <div class="content">
+        <p>We keep pets for pleasure. Vitamins For all Pets We know your concerns when you are looking for a chewing treat for your dog.</p>
+        <!-- 假设你有一个名为'dog.png'的宠物狗图片 -->
+        <img src="../static/images/banner/1.png" alt="Pet Dog">
+    </div>
+    <footer>
+        <button>ADOPT NOW</button>
+    </footer>
+</body>
+</html>

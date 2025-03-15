@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基于Django的宠物领养平台系统架构图</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1000px;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .architecture-diagram {
+            width: 100%;
+            height: 600px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        
+        /* SVG样式 */
+        rect.box {
+            stroke-width: 2px;
+            rx: 6px;
+            ry: 6px;
+        }
+        
+        text {
+            font-family: 'Arial', sans-serif;
+            font-size: 14px;
+            text-anchor: middle;
+            dominant-baseline: middle;
+        }
+        
+        .frontend {
+            fill: #fff9e6;
+            stroke: #ffd699;
+        }
+        
+        .backend {
+            fill: #f0f8ff;
+            stroke: #b3d1ff;
+        }
+        
+        .user-interface {
+            fill: #d1e7dd;
+            stroke: #75c6b3;
+        }
+        
+        .browser {
+            fill: #ffdadb;
+            stroke: #ffa7aa;
+        }
+        
+        .controller {
+            fill: #d0e1ff;
+            stroke: #9ec3ff;
+        }
+        
+        .view {
+            fill: #d8f3d8;
+            stroke: #a3e0a3;
+        }
+        
+        .template {
+            fill: #d0e1ff;
+            stroke: #9ec3ff;
+        }
+        
+        .model {
+            fill: #ffe8cc;
+            stroke: #ffcc80;
+        }
+        
+        .database {
+            fill: #e5d8ff;
+            stroke: #c9b3ff;
+        }
+        
+        .user {
+            fill: #f8f9fa;
+            stroke: #ced4da;
+        }
+        
+        .arrow {
+            stroke: #666;
+            stroke-width: 1.5px;
+            fill: none;
+        }
+        
+        .arrow-head {
+            fill: #666;
+        }
+        
+        .label {
+            font-size: 12px;
+            fill: #333;
+        }
+        
+        .caption {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>基于Django的宠物领养平台系统架构图</h1>
+        
+        <svg class="architecture-diagram" viewBox="0 0 1000 600">
+            <!-- 前端框 -->
+            <rect x="50" y="50" width="300" height="350" class="box frontend" />
+            <text x="200" y="80" font-weight="bold">前端 - 用户界面</text>
+            
+            <!-- 后端框 -->
+            <rect x="450" y="50" width="500" height="350" class="box backend" />
+            <text x="700" y="80" font-weight="bold">后端 (Django Framework)</text>
+            
+            <!-- 前端组件 -->
+            <!-- 用户界面 -->
+            <rect x="80" y="120" width="80" height="60" class="box user-interface" />
+            <text x="120" y="140">普通用户</text>
+            <text x="120" y="160">界面</text>
+            
+            <rect x="180" y="120" width="80" height="60" class="box user-interface" />
+            <text x="220" y="140">宠物发布者</text>
+            <text x="220" y="160">界面</text>
+            
+            <rect x="280" y="120" width="80" height="60" class="box user-interface" />
+            <text x="320" y="140">管理员</text>
+            <text x="320" y="160">界面</text>
+            
+            <!-- Web浏览器 -->
+            <rect x="150" y="240" width="100" height="50" class="box browser" />
+            <text x="200" y="265">Web浏览器</text>
+            
+            <!-- 后端组件 -->
+            <!-- URL控制器 -->
+            <rect x="520" y="320" width="100" height="60" class="box controller" />
+            <text x="570" y="340">Django</text>
+            <text x="570" y="360">URLs</text>
+            
+            <!-- 视图 -->
+            <rect x="650" y="200" width="80" height="160" class="box view" />
+            <text x="690" y="260">Django</text>
+            <text x="690" y="280">Views</text>
+            
+            <!-- 模板 -->
+            <rect x="520" y="180" width="100" height="60" class="box template" />
+            <text x="570" y="210">Django Templates</text>
+            
+            <!-- 数据模型 -->
+            <rect x="780" y="200" width="80" height="160" class="box model" />
+            <text x="820" y="250">Django</text>
+            <text x="820" y="270">Models</text>
+            
+            <!-- 数据库 -->
+            <rect x="880" y="220" width="50" height="100" rx="25" ry="25" class="database" />
+            <ellipse cx="905" cy="220" rx="25" ry="10" class="database" />
+            <text x="905" y="255">数据库</text>
+            <text x="905" y="275">MySQL</text>
+            
+            <!-- 用户 -->
+            <circle cx="200" cy="450" r="30" class="user" />
+            <path d="M200,430 Q200,410 220,420 Q240,430 220,440 Q200,450 200,430" class="user" />
+            <circle cx="200" cy="405" r="15" class="user" />
+            <text x="200" y="495">用户/宠物领养者</text>
+            
+            <!-- 箭头和连接 -->
+            <!-- 用户到浏览器 -->
+            <path d="M200,420 L200,290" class="arrow" />
+            <polygon points="200,290 196,298 204,298" class="arrow-head" />
+            
+            <!-- 浏览器到URL控制器（请求） -->
+            <path d="M250,265 L520,350" class="arrow" />
+            <polygon points="520,350 512,346 516,354" class="arrow-head" />
+            <text x="370" y="320" class="label">HTTP请求</text>
+            
+            <!-- URL控制器到视图 -->
+            <path d="M620,350 L650,350" class="arrow" />
+            <polygon points="650,350 642,346 642,354" class="arrow-head" />
+            
+            <!-- 视图到模板 -->
+            <path d="M650,210 L620,210" class="arrow" />
+            <polygon points="620,210 628,206 628,214" class="arrow-head" />
+            <text x="635" y="195" class="label">上下文数据</text>
+            
+            <!-- 模板到前端（响应） -->
+            <path d="M520,210 L350,150" class="arrow" />
+            <polygon points="350,150 358,148 354,156" class="arrow-head" />
+            <text x="420" y="170" class="label">HTTP响应</text>
+            
+            <!-- 视图到数据模型 -->
+            <path d="M730,260 L780,260" class="arrow" />
+            <polygon points="780,260 772,256 772,264" class="arrow-head" />
+            <text x="755" y="245" class="label">查询/请求</text>
+            
+            <!-- 数据模型到视图 -->
+            <path d="M780,320 L730,320" class="arrow" />
+            <polygon points="730,320 738,316 738,324" class="arrow-head" />
+            <text x="755" y="335" class="label">QuerySet结果</text>
+            
+            <!-- 数据模型到数据库 -->
+            <path d="M860,280 L880,280" class="arrow" />
+            <polygon points="880,280 872,276 872,284" class="arrow-head" />
+            
+            <!-- 功能标签 -->
+            <rect x="50" y="520" width="900" height="60" rx="10" ry="10" stroke="#ddd" fill="#f9f9f9" stroke-width="1" />
+            <text x="500" y="545" font-size="14" font-weight="bold">功能模块：用户管理 | 宠物信息管理 | 收藏功能 | 领养申请 | 后台管理 | 数据统计</text>
+            
+            <!-- Django标志 -->
+            <text x="700" y="110" font-size="12" fill="#44B78B">Django MVT架构</text>
+        </svg>
+        
+        <div class="caption">
+            <p>本架构图展示了基于Django框架开发的宠物领养平台系统的整体结构。系统分为前端和后端两大部分，前端包括各类用户界面，后端采用Django的MVT(Model-View-Template)架构模式，实现了用户管理、宠物信息管理、收藏和领养等核心功能。</p>
+        </div>
+    </div>
+</body>
+</html> 

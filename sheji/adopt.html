@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetHomes 灰色设计稿</title>
+<style>
+    /* 全局样式 */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0; /* 浅灰色背景 */
+        color: #333; /* 深灰色文字 */
+    }
+
+    /* 头部样式 */
+    header {
+        background-color: #606060; /* 中灰色背景 */
+        color: #fff; /* 白色文字 */
+        padding: 15px;
+        text-align: center;
+    }
+
+    /* 搜索栏样式 */
+    .search-bar {
+        background-color: #d0d0d0; /* 浅灰色背景 */
+        padding: 10px;
+        text-align: center;
+        border-bottom: 1px solid #c0c0c0; /* 深一点的灰色边框 */
+    }
+    .search-bar input[type="text"] {
+        padding: 8px;
+        width: calc(80% - 80px); /* 调整搜索框宽度 */
+        border: 1px solid #b0b0b0; /* 灰色边框 */
+        border-radius: 4px; /* 圆角 */
+    }
+    .search-bar button {
+        padding: 8px 20px;
+        background-color: #808080; /* 中灰色按钮背景 */
+        color: #fff; /* 白色文字 */
+        border: none;
+        cursor: pointer;
+        border-radius: 4px; /* 圆角 */
+    }
+    .search-bar button:hover {
+        background-color: #909090; /* 鼠标悬停时颜色稍深 */
+    }
+
+    /* 内容区域样式 */
+    .content {
+        display: flex;
+        flex-wrap: wrap; /* 允许内容换行 */
+        padding: 20px;
+    }
+    .content .image-container {
+        flex: 1;
+        margin-right: 20px; /* 右侧间距 */
+        text-align: center;
+    }
+    .content .image-container img {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #c0c0c0; /* 灰色边框 */
+        border-radius: 8px; /* 圆角 */
+    }
+    .content .sidebar {
+        flex: 0 0 30%; /* 侧边栏固定宽度 */
+        background-color: #e0e0e0; /* 浅灰色背景 */
+        padding: 20px;
+        border-radius: 8px; /* 圆角 */
+    }
+    .content .sidebar h2 {
+        margin-top: 0;
+        color: #606060; /* 中灰色文字 */
+    }
+
+    /* 占位符图像样式（实际应使用具体图像） */
+    .placeholder-image {
+        width: 100px;
+        height: 100px;
+        background-color: #d0d0d0; /* 浅灰色占位符背景 */
+        display: inline-block;
+        border-radius: 8px; /* 圆角 */
+    }
+
+    /* 底部导航栏样式 */
+    footer {
+        background-color: #606060; /* 中灰色背景 */
+        color: #fff; /* 白色文字 */
+        text-align: center;
+        padding: 10px;
+        position: fixed; /* 固定底部 */
+        width: 100%;
+        bottom: 0;
+    }
+    footer a {
+        color: #fff; /* 白色链接文字 */
+        text-decoration: none;
+        margin: 0 15px;
+    }
+    footer a:hover {
+        text-decoration: underline; /* 鼠标悬停时下划线 */
+    }
+</style>
+</head>
+<body>
+<header>
+    <h1>Welcome to PetHomes</h1>
+</header>
+<div class="search-bar">
+    <input type="text" placeholder="Search...">
+    <button>SEARCH</button>
+</div>
+<div class="content">
+    <div class="image-container">
+        <!-- 使用占位符图像表示应放置图像的位置 -->
+        <div class="placeholder-image"></div>
+        <p>女性脸部特写（占位符）</p>
+    </div>
+    <div class="sidebar">
+        <h2>ADOPT SIDEBAR</h2>
+        <!-- 使用占位符图像表示应放置图像的位置 -->
+        <div class="placeholder-image" style="margin-bottom: 10px;"></div>
+        <div class="placeholder-image"></div>
+        <p>两个女性头像（占位符）</p>
+    </div>
+    <!-- 可在此处添加更多内容或保持空白 -->
+</div>
+<footer>
+    <a href="#">HOME</a>
+    <a href="#">MY ACCOUNTS</a>
+    <a href="#">MANAGE</a>
+</footer>
+</body>
+</html>

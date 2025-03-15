@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <!-- Breadcrumb Area Start -->
+    <div class="section breadcrumb-area bg-name-bright">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="breadcrumb-wrapper">
+                        <h2 class="breadcrumb-title">Adopt Sidebar</h2>
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li>Adopt Sidebar</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Area End -->
+
+    <!-- Shop Section Start -->
+    <div class="section section-margin">
+        <div class="container">
+            <div class="row flex-row-reverse">
+                <div class="col-lg-9 col-12">
+
+                    <!--shop toolbar start-->
+                    <div class="shop_toolbar_wrapper flex-column flex-md-row p-2 m-b-40 border">
+
+                        <!-- Shop Top Bar Left start -->
+                        <div class="shop-top-bar-left">
+
+                            <div class="shop_toolbar_btn">
+                                <button data-role="grid_3" type="button" class="active btn-grid-3" title="Grid"><i class="ti-layout-grid4-alt"></i></button>
+                                <button data-role="grid_list" type="button" class="btn-list" title="List"><i class="ti-align-justify"></i></button>
+                            </div>
+                            <div class="shop-top-show">
+                                <span>Showing 1–12 of 39 results</span>
+                            </div>
+
+                        </div>
+                        <!-- Shop Top Bar Left end -->
+
+                        <!-- Shopt Top Bar Right Start -->
+{#                        <div class="shop-top-bar-right">#}
+{##}
+{#                            <h4 class="title m-r-10">Short By: </h4>#}
+{##}
+{#                            <div class="shop-short-by">#}
+{#                                <select class="nice-select" aria-label=".form-select-sm example">#}
+{#                                    <option selected>Short by Default</option>#}
+{#                                    <option value="1">Short by Popularity</option>#}
+{#                                    <option value="2">Short by Rated</option>#}
+{#                                    <option value="3">Short by Latest</option>#}
+{#                                    <option value="3">Short by Price</option>#}
+{#                                    <option value="3">Short by Price</option>#}
+{#                                </select>#}
+{#                            </div>#}
+{#                        </div>#}
+                        <!-- Shopt Top Bar Right End -->
+
+                    </div>
+                    <!--shop toolbar end-->
+
+                    <!-- Shop Wrapper Start -->
+                    <div class="row shop_wrapper grid_3">
+
+                        {% for pet in article_list %}
+                            <!-- Single Product Start -->
+                            <div class="col-lg-4 col-md-4 col-sm-6 product">
+                                <div class="product-inner">
+                                    <div class="thumb">
+                                        <a href="/detail?id={{ pet.id }}" class="image">
+                                            <img class="fit-image" src="/media/{{ pet.showimg }}" alt="{{ pet.name  }}" />
+                                        </a>
+                                        <span class="badges">
+                                                <span class="sale">{{ pet.atype }}</span>
+                                        </span>
+                                        <div class="action-wrapper">
+                                            <a href="/detail?id={{ pet.id }}" class="action quickview" data-bs-toggle="modal" data-bs-target="#quick-view" title="Quickview"><i class="ti-desktop"></i>Detail</a>
+{#                                            <a href="wishlist.html" class="action wishlist" title="Wishlist"><i class="ti-heart"></i></a>#}
+{#                                            <a href="cart.html" class="action cart" title="Cart"><i class="ti-shopping-cart"></i></a>#}
+                                        </div>
+                                    </div>
+                                    <div class="content">
+                                        <h5 class="title"><a href="/detail?id={{ pet.id }}">An Animal Album</a></h5>
+                                        <span class="rating">
+                                                {{ pet.get_status_display }}
+                                            </span>
+                                        <span class="price">
+                                                <span class="new">{{ pet.name }}</span>--
+                                        </span>
+                                        <p>{{ pet.intro }}</p>
+                                        <!-- Cart Button Start -->
+                                        <div class="cart-btn action-btn">
+                                            <div class="action-cart-btn-wrapper d-flex">
+                                                <div class="add-to_cart">
+                                                    <a class="btn btn-primary btn-hover-dark rounded-0" href="/detail?id={{ pet.id }}">Detail</a>
+                                                </div>
+{#                                                <a href="wishlist.html" title="Wishlist" class="action"><i class="ti-heart"></i></a>#}
+{#                                                <a href="#/" class="action quickview" data-bs-toggle="modal" data-bs-target="#quick-view" title="Quickview"><i class="ti-plus"></i></a>#}
+                                            </div>
+                                        </div>
+                                        <!-- Cart Button End -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Single Product End -->
+                        {% endfor %}
+
+
+
+                    </div>
+                    <!-- Shop Wrapper End -->
+
+                    <!--shop toolbar start-->
+                    {% include 'pagination.html' %}
+                    <!--shop toolbar end-->
+
+                </div>
+                <div class="col-lg-3 col-12">
+                    <!-- Sidebar Widget Start -->
+                    <aside class="sidebar_widget m-t-50 mt-lg-0">
+                        <div class="widget_inner">
+                            <div class="widget-list m-b-50">
+                                <h3 class="widget-title m-b-30">Search</h3>
+                                <form method="get" action="/pets">
+                                    <div class="search-box">
+                                        <input name="key" type="text" class="form-control" placeholder="Search Our Store" aria-label="Search Our Store">
+                                        <button class="search-icon" type="submit">
+                                            <i class="icon-magnifier"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="widget-list m-b-50">
+                                <h3 class="widget-title m-b-30">Categories</h3>
+                                <div class="sidebar-body">
+                                    <ul class="sidebar-list">
+                                        {% for ca in all_types %}
+                                            <li><a href="/pets?category={{ ca.id }}">{{ ca.name }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="widget-list m-b-50">
+                                <h3 class="widget-title m-b-30">Areas</h3>
+                                <div class="sidebar-body">
+                                    <ul class="sidebar-list">
+                                        {% for area in area_alist %}
+                                            <li><a href="/pets?area={{ area }}">{{ area }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="widget-list m-b-50">
+                                <h3 class="widget-title m-b-30">Ages</h3>
+                                <div class="sidebar-body">
+                                    <ul class="sidebar-list">
+                                        {% for age in age_alist %}
+                                            <li><a href="/pets?age={{ age }}">{{ age }} Year</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </aside>
+                    <!-- Sidebar Widget End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Shop Section End -->
+{% endblock %}
+

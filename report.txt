@@ -1,0 +1,404 @@
+# Pet Adoption Platform Project Report
+
+## Introduction
+
+The Pet Adoption Platform is a web application designed to connect pet owners who need to rehome their pets with potential adopters. The platform aims to provide a user-friendly interface for publishing pet information, browsing available pets, and managing the adoption process. 
+
+The application was developed using the Django framework, implementing a Model-View-Template (MVT) architecture that provides a clean separation of concerns. The initial design specifications were adjusted to focus more on core functionality rather than advanced features, ensuring a solid foundation that meets the primary needs of users.
+
+Key adjustments to the original design included:
+- Prioritizing essential user authentication and pet management features
+- Implementing a simplified pet filtering system based on type and location
+- Focusing on responsive design for both desktop and mobile users
+- Emphasizing clean, intuitive user interfaces over complex interactions
+
+The application is deployed at: [https://petadoption.example.com](https://petadoption.example.com)
+
+## Design Specification
+
+### Overview of the Implemented Application
+
+The Pet Adoption Platform is a comprehensive web application that facilitates the connection between pet owners and potential adopters. The platform enables users to create accounts, publish information about pets available for adoption, browse through listings using various filters, save favorite pets, and manage adoption applications.
+
+The system is built using the Django web framework, which provides robust tools for handling database operations, user authentication, and request processing. The frontend utilizes HTML, CSS, and JavaScript to create responsive, user-friendly interfaces that adapt to different screen sizes.
+
+### Requirements List
+
+#### Functional Requirements
+
+1. User Management
+   - User registration with username, password, and mobile number
+   - User login and authentication
+   - User profile management
+   - Session management (login persistence)
+
+2. Pet Management
+   - Pet information creation with details (name, type, age, area, status)
+   - Pet image upload and display
+   - Pet listing with filtering options
+   - Pet information editing and deletion by owner
+
+3. Adoption Process
+   - Ability to browse available pets
+   - Detailed view of pet information
+   - Pet collection (favorites) functionality
+   - Adoption application submission
+   - Application status tracking
+
+4. Administration
+   - Admin panel for system management
+   - User account management
+   - Pet listing approval/rejection
+   - Adoption application approval/rejection
+
+#### Non-functional Requirements
+
+1. Performance
+   - Page load time under 3 seconds
+   - Support for simultaneous user operations
+
+2. Security
+   - Password encryption
+   - Form validation and data sanitization
+   - Protection against common web vulnerabilities
+
+3. Usability
+   - Intuitive user interface
+   - Responsive design for mobile and desktop
+   - Clear feedback for user actions
+
+4. Reliability
+   - System availability (99% uptime)
+   - Data backup and recovery
+
+5. Maintainability
+   - Modular code structure
+   - Comprehensive documentation
+   - Unit tests for core functionality
+
+### System Architecture Diagram
+
+The system follows a layered architecture pattern, consisting of:
+
+1. Client Layer: Web browsers and mobile browsers that send requests to the server
+2. Presentation Layer: HTML/CSS, JavaScript/jQuery, and Django Templates that render the UI
+3. Business Logic Layer: Django Views, Forms, and Application Modules that process requests
+4. Data Access Layer: Django Models and Database that store and retrieve data
+
+### ER Diagram
+
+The database schema includes the following entities and relationships:
+
+1. UserProfile
+   - Fields: id (PK), username, password, mpassword, mobile
+   - Relationships: One-to-many with PetsInfo, Collect, and Adoption
+
+2. PetsType
+   - Fields: id (PK), name, updated, create_time
+   - Relationships: One-to-many with PetsInfo
+
+3. PetsInfo
+   - Fields: id (PK), user (FK), showimg, name, intro, area, atype (FK), age, status
+   - Relationships: Many-to-one with UserProfile and PetsType; One-to-many with Collect and Adoption
+
+4. Collect
+   - Fields: id (PK), user (FK), pet (FK), updated, create_time
+   - Relationships: Many-to-one with UserProfile and PetsInfo
+
+5. Adoption
+   - Fields: id (PK), user (FK), pet (FK), status, updated, create_time
+   - Relationships: Many-to-one with UserProfile and PetsInfo
+
+### Sitemap
+
+The application's navigation structure includes:
+
+1. Home Page
+   - Links to: Login, Register, Pet List, User Center, Admin
+
+2. Primary Pages
+   - Login Page
+   - Registration Page
+   - Pet List Page
+   - User Center
+   - Admin Backend
+
+3. Secondary Pages
+   - Pet Details Page (accessed from Pet List)
+   - Add Pet Page (accessed from Pet List)
+   - My Profile Page (accessed from User Center)
+   - My Collections Page (accessed from User Center)
+   - My Adoptions Page (accessed from User Center)
+
+### Wireframes
+
+The application includes wireframes for four main pages:
+
+1. Homepage
+   - Navigation bar
+   - Featured pets carousel
+   - Recommended pets section
+   - Feature quick links
+
+2. Pet Details Page
+   - Navigation bar
+   - Pet image display
+   - Pet information section
+   - Collect and adoption action buttons
+
+3. User Center
+   - Navigation bar
+   - Sidebar with user options
+   - Main content area for displaying user-specific information
+
+4. Pet List Page
+   - Navigation bar
+   - Filtering options
+   - Grid display of available pets
+
+## Implementation Description
+
+### Main Components
+
+#### 1. User Authentication System (accounts app)
+
+The accounts application handles all user-related functionality:
+
+- User registration with custom validation
+- Login and authentication using Django's built-in authentication system
+- Password encryption and storage
+- User profile management
+
+Key implementation features:
+- Custom UserProfile model extending Django's AbstractUser
+- Custom forms for validation of user inputs
+- Session-based authentication
+
+Code example (User Model):
+```python
+class UserProfile(AbstractUser):
+    mpassword = models.CharField(max_length=100, default='')
+    mobile = models.CharField(max_length=11, default='')
+
+    class Meta:
+        verbose_name = "用户信息"
+        verbose_name_plural = verbose_name
+        ordering = ['-id']
+
+    def __str__(self):
+        return self.username
+```
+
+#### 2. Pet Management System (pets app)
+
+The pets application manages all pet-related functionality:
+
+- Pet information creation and storage
+- Pet listing with filtering options
+- Pet image handling
+- Pet status management
+
+Key implementation features:
+- Models for PetsType and PetsInfo
+- Views for displaying, creating, and updating pet information
+- Form validation for pet data
+- Image upload and storage
+
+Code example (PetsInfo Model):
+```python
+class PetsInfo(models.Model):
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name='用户')
+    showimg = models.FileField(upload_to='petimg/', default='', verbose_name='宠物展示图片')
+    name = models.CharField(max_length=100, verbose_name='宠物昵称')
+    intro = models.TextField(verbose_name='宠物介绍')
+    area = models.CharField(max_length=100, verbose_name='所在地区')
+    atype = models.ForeignKey(PetsType, on_delete=models.CASCADE, verbose_name='宠物类型')
+    age = models.IntegerField(default=0, verbose_name='宠物年龄')
+    status = models.IntegerField(choices=PET_STATUS, default=0, verbose_name='宠物状态')
+    updated = models.DateTimeField(auto_now=True, verbose_name='更新时间')
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+
+    class Meta:
+        verbose_name = '宠物信息'
+        verbose_name_plural = verbose_name
+        ordering = ['-create_time']
+
+    def __str__(self):
+        return self.name
+```
+
+#### 3. Collection and Adoption System
+
+These features allow users to interact with pet listings:
+
+- Collect (favorite) pets for later viewing
+- Submit adoption applications
+- Track application status
+
+Key implementation features:
+- Models for Collect and Adoption
+- AJAX-based interaction for collecting pets
+- Status tracking for adoption applications
+
+Code example (Adoption View):
+```python
+def adopt(request):
+    if request.method == 'POST':
+        wid = request.POST.get('wid', '')
+        if wid:
+            # Check if pet exists and is available
+            pet = PetsInfo.objects.filter(id=wid, status=0).first()
+            if pet:
+                # Create adoption application
+                Adoption.objects.create(
+                    user=request.user,
+                    pet=pet
+                )
+                return JsonResponse({'status': 'success'})
+    return JsonResponse({'status': 'fail'})
+```
+
+#### 4. Frontend Design and User Interface
+
+The application's UI was implemented using:
+
+- HTML5 and CSS3 for structure and styling
+- Bootstrap for responsive grid layouts
+- JavaScript/jQuery for interactive elements
+- Django templates for dynamic content rendering
+
+Key implementation features:
+- Responsive design that adapts to different screen sizes
+- Consistent styling across all pages
+- Interactive elements for improved user experience
+- Form validation with visual feedback
+
+#### 5. Admin Interface
+
+The admin interface provides system management capabilities:
+
+- User account management
+- Pet listing approval and management
+- Adoption application processing
+
+Key implementation features:
+- Django's built-in admin site with customizations
+- Custom admin views for specific management tasks
+- Permission-based access control
+
+### Public Code Repository
+
+The complete source code for this project is available at:
+[https://github.com/example/pet-adoption-platform](https://github.com/example/pet-adoption-platform)
+
+## System Testing
+
+The application has been thoroughly tested using Django's built-in testing framework. The testing strategy focused on ensuring that all components function correctly both individually and as part of the integrated system.
+
+### Test Implementation
+
+#### 1. User Authentication Tests (accounts/tests.py)
+
+Tests for the user authentication system include:
+
+- User model tests: verifying user creation and attributes
+- Login view tests: testing login page access and functionality
+- Registration form tests: validating form input handling
+
+Example test:
+```python
+def test_user_creation(self):
+    """Test user creation"""
+    self.assertEqual(self.user.username, 'testuser')
+    self.assertEqual(self.user.email, 'test@example.com')
+    self.assertEqual(self.user.mobile, '13800138000')
+    self.assertTrue(self.user.check_password('testpassword123'))
+```
+
+#### 2. Pet Management Tests (pets/tests.py)
+
+Tests for the pet management system include:
+
+- Pet model tests: verifying pet creation and attributes
+- Pet view tests: testing list and detail views
+- Filter functionality tests: validating filter operations
+
+Example test:
+```python
+def test_pet_creation(self):
+    """Test pet creation"""
+    self.assertEqual(self.pet.name, 'Buddy')
+    self.assertEqual(self.pet.intro, 'A friendly dog')
+    self.assertEqual(self.pet.area, 'Beijing')
+    self.assertEqual(self.pet.age, 3)
+    self.assertEqual(self.pet.atype.name, 'Dog')
+    self.assertEqual(self.pet.status, 0)
+```
+
+#### 3. Collection and Adoption Tests
+
+Tests for collection and adoption features include:
+
+- Collection functionality tests: verifying pet collection operations
+- Adoption process tests: validating adoption application submission
+
+Example test:
+```python
+def test_collect_pet(self):
+    """Test pet collection"""
+    # Check initial state
+    self.assertEqual(Collect.objects.count(), 0)
+    
+    # Perform collection
+    collect_url = reverse('collect')
+    response = self.client.post(collect_url, {'wid': self.pet.id})
+    
+    # Check response and database
+    self.assertEqual(response.status_code, 200)
+    self.assertEqual(Collect.objects.count(), 1)
+```
+
+### Test Results
+
+The implemented tests demonstrate that the system functions correctly across all major components:
+
+1. User Authentication:
+   - User registration works as expected
+   - Login validation functions correctly
+   - User profile data is properly stored and retrieved
+
+2. Pet Management:
+   - Pet information is created and stored correctly
+   - Pet listing and filtering work as expected
+   - Pet details are displayed accurately
+
+3. Collection and Adoption:
+   - Users can collect pets successfully
+   - Adoption applications are processed correctly
+   - Status updates are properly reflected
+
+The comprehensive test suite ensures that the application maintains its integrity and meets the specified requirements. All tests pass successfully, indicating that the system is functioning as designed.
+
+## Appendix: Team Contributions
+
+### Team Member Contributions
+
+#### Member 1: [Your Name] - 100%
+- Project architecture and setup
+- User authentication system implementation
+- Pet management system implementation
+- Collection and adoption features
+- Frontend design and implementation
+- Testing and debugging
+- Documentation and deployment
+
+Note: This project was completed individually as a solo assignment.
+
+### Development Tools and Technologies
+
+- Backend: Python 3.8, Django 3.2
+- Frontend: HTML5, CSS3, JavaScript, jQuery, Bootstrap
+- Database: SQLite (development), PostgreSQL (production)
+- Testing: Django Test Framework
+- Version Control: Git, GitHub
+- Deployment: Heroku 
