@@ -1,3 +1,9 @@
+#Environmental installation- python=3.7+
+- Django = 3.2.7
+
+# Installation method- pip install -r requests.txt -i https://pypi.tuna.tsinghua.edu.cn/simple/
+- python manage.py runserver 
+- Browser open http://127.0.0.1:8000/- Admin browser open http://127.0.0.1:8000/admin- Administrator account password: manage createsuperuser
 ```mermaid
 erDiagram
     UserProfile ||--o{PetsInfo} : "owns"

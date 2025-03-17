@@ -1,6 +1,4 @@
-"""
-简化的测试设置文件，用于运行单元测试
-"""
+"""Simplified test setup file for running unit tests"""
 import os
 from pathlib import Path
 
@@ -15,7 +13,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# 简化的应用列表，只包含测试必需的应用
+# Simplified application list, containing only the necessary applications for testing
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -57,7 +55,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'xy_pets.wsgi.application'
 
-# 使用SQLite内存数据库进行测试
+# Testing with SQLite in-memory database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -80,7 +78,7 @@ LOGIN_URL = '/accounts/login'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_URL = '/accounts/logout'
 
-# 只为测试设置的媒体文件配置
+# Media file configuration only for testing
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "test_media")
 

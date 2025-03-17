@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html lang="zh">
+<html>
+<head>
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{#    <meta name="renderer" content="webkit">#}
+    <meta name="referrer" content="no-referrer">
+    {% block mymeta %}{% endblock %}
+
+    <meta name="baidu-site-verification" content="o4aOEJiuUp" />
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- CSS文件 -->
+{#    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">#}
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/font-awesome.css" %}" rel="stylesheet">
+{#    <link href="{% static "css/animate.css" %}" rel="stylesheet">#}
+    <link href="{% static "css/style.css" %}" rel="stylesheet">
+    <link href="{% static "css/plugins/sweetalert/sweetalert.css" %}" rel="stylesheet">
+{#    <link href="https://cdn.bootcss.com/sweetalert/1.1.3/sweetalert.min.css" rel="stylesheet">#}
+{#    <link href="{% static "css/summernote/summernote.css" %}" rel="stylesheet">#}
+    <link href="{% static "css/summernote/summernote-bs4.css" %}" rel="stylesheet">
+{#    <link href="https://cdn.bootcss.com/summernote/0.8.9/summernote-bs4.js" rel="stylesheet">#}
+     <style>
+        span.highlighted {
+            color: red;
+        }
+    </style>
+    <script src="{% static "js/particles.js" %}"></script>
+
+    <script src="{% static "js/jquery.min.js" %}"></script>
+    <script src="{% static "echarts.min.js" %}"></script>
+    <script src="{% static "js/layer/layer.js" %}"></script>
+{#    <script src="https://cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>#}
+
+
+</head>
+<body>
+    <div class="gray-bg top-navigation"  id="wrapper">
+        <div id="page-wrapper" class="gray-bg">
+            <div class="row border-bottom white-bg">
+                <nav class="navbar navbar-static-top" role="navigation">
+                    <div class="navbar-header">
+                        <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed btn-primary" type="button">
+                            <i class="fa fa-reorder"></i>
+                        </button>
+                        <a href="#" class="navbar-brand">电子书</a>
+                    </div>
+                    <div id="navbar" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav ">
+
+                            <li class="active">
+                                <a aria-expanded="false" role="button" href="/"> 首页</a>
+                            </li>
+
+
+                        </ul>
+                        <ul class="nav navbar-top-links navbar-right">
+                            {% if request.user.username %}
+
+                                <li>
+                                    <a href="/accounts/my_info">
+                                        <i class="fa fa-hand-grab-o"></i> {{ request.user.username }}
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="/accounts/logout">
+                                        <i class="fa fa-sign-out"></i> 退出
+                                    </a>
+                                </li>
+                             {% else %}
+                                <li>
+                                    <a href="/accounts/login">
+                                        <i class="fa fa-hand-grab-o"></i> 登录
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/accounts/register">
+                                        <i class="fa fa-sign-out"></i> 注册
+                                    </a>
+                                </li>
+
+                            {% endif %}
+
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            {% block content %}{% endblock %}
+            <div class="footer navbar-fixed-bottom">
+                <div class="pull-right">
+                    By：<a href="/admin" target="_blank"> 管理端</a>
+                </div>
+                <div class="pull-left">
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <script src="{% static "js/bootstrap.min.js"%}"></script>
+    <script src="{% static "js/content.js" %}"></script>
+    <script src="{% static "js/plugins/sweetalert/sweetalert.min.js" %}"></script>
+    <script src="{% static "js/summernote/summernote-bs4.js" %}"></script>
+    <script src="{% static "js/summernote/summernote-zh-CN.js" %}"></script>
+    <script src="{% static "js/summernote/initsu.js" %}"></script>
+    <script src="{% static "js/scrollReveal.js" %}"></script>
+    <script src="{% static "js/init.js" %}"></script>
+    <script>
+        {% if msg %}
+            layer.alert('{{ msg }}')
+        {% endif %}
+    </script>
+</body>
+</html>

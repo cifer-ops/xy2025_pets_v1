@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pets',
-    'ckeditor',#富文本编辑器
-    'ckeditor_uploader',#富文本编辑器上传图片模块
+    'ckeditor',#Rich text editor
+    'ckeditor_uploader',#Rich text editor upload image module
     'accounts'
 ]
 
@@ -82,8 +82,15 @@ WSGI_APPLICATION = 'xy_pets.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'xy_pets_db',
+        'USER': 'root',
+        'PASSWORD': '020117Xyz',
+        'HOST': 'localhost',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     }
 }
 
@@ -150,14 +157,14 @@ LOGOUT_URL = '/accounts/logout'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CKEDITOR_CONFIGS = {
-    #（1）默认配置
+    #(1) Default configuration
     # 'default': {
-    #     'toolbar': 'full',  # 工具条功能
-    #     'height': 300,  # 编辑器高度
-    #     'width': 800,  # 编辑器宽
+    #     'toolbar': 'full', # Toolbar function
+    #     'height': 300, #Editor height
+    #     'width': 800, # editor width
     # },
 
-    #（3）自定义配置带代码块显示
+    #(3) Custom configuration with code block display
     'default': {
         'toolbar': (
             ['div', 'Source', '-', 'Save', 'NewPage', 'Preview', '-', 'Templates'],
@@ -175,14 +182,17 @@ CKEDITOR_CONFIGS = {
             ['Blockquote', 'CodeSnippet'],
         ),
         'width': 'auto',
-        # 添加按钮在这里
+        # Add button here
         'toolbar_Custom': [
             ['NumberedList', 'BulletedList'],
             ['Blockquote', 'CodeSnippet'],
         ],
-        # 插件
+        # Plugin
         'extraPlugins': ','.join(['codesnippet', 'widget', 'lineutils', ]),
     },
 }
 SIMPLEUI_HOME_INFO = False
 SIMPLEUI_ANALYSIS = False
+
+# 添加静态文件根目录设置
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

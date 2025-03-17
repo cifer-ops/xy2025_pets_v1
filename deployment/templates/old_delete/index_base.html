@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="wrapper wrapper-content">
+        <div class="container">
+            <div class="row">
+
+
+                <div class="col-md-8">
+                    {% block article %}{% endblock %}
+                </div>
+
+                <div class="col-md-4">
+                    <div class="ibox-content text-center">
+                                <h1><a href="/accounts/my_info">电子书下载系统</a></h1>
+                                {% if request.user.avatar %}
+                                    <div class="m-b-sm">
+                                    <img alt="image" width="100px" height="100px" src="/media/{{ request.user.avatar }}">
+                                    </div>
+                                {% endif %}
+{#                                {% if request.user.is_v %}#}
+{#                                    <div>#}
+{#                                        <p>#}
+{#                                            <img src="/static/img/vip.png">#}
+{#                                        </p>#}
+{#                                    </div>#}
+{#                                {% endif %}#}
+
+                                <div class="text-center">
+                                    <a class="btn btn-xs btn-info" href="/accounts/my_info"><i class="fa fa-heart"></i>个人中心 </a>
+                                    <a class="btn btn-xs btn-info"  href="/my_colloect"><i class="fa fa-thumbs-up"></i> 我的收藏</a>
+                                    <a class="btn btn-xs btn-info"  href="/my_zan"><i class="fa fa-adjust"></i> 点赞历史</a>
+                                </div>
+                    </div>
+
+
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>电子书分类</h5>
+                        </div>
+                        <div class="ibox-content">
+                        {% for atyle in all_types %}
+                                <ul>
+                                    <li>
+                                        <a href="/index?category={{ atyle.id }}">{{ atyle.name }}</a>
+                                    </li>
+                                </ul>
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+{% endblock %}

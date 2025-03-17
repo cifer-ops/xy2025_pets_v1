@@ -1,0 +1,123 @@
+{% extends 'index_base.html' %}
+{% load static %}
+{% block mymeta %}
+<meta name="keywords" content="My personal information" /><meta name="description" content="My personal information" />
+{% endblock %}
+{% block article %}<div class="row"><div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Modify<small>My Information</small></h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-sm-6 b-r">
+                                <h3 class="m-t-none m-b">Welcome</h3><p>Welcome to modify(⊙o⊙)</p><form role="form" method="post" enctype="multipart/form-data" action="/accounts/my_info">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label>Username</label><input type="text" name="username" placeholder="Please enter your username" class="form-control" value="{{ user.username }}"></div>{# <div class="form-group">#}
+{# <label> type</label>#}
+{# <select class="form-control m-b" name="pet_type">#}
+{# <option value="{{ mtype.id }}">{{ mtype.name }}</option>#}
+{# </select>#}
+{# </div>#}
+                                    <div class="form-group">
+                                        <label>Mobile number</label><input type="text" name="mobile" placeholder="Please enter your mobile phone number" class="form-control" value="{{ user.mobile }}"></div><div class="form-group">
+                                        <label>Avatar</label><input type="text" class="form-control" value="{{ user.avatar }}" readonly>
+                                        <input type="file" name="avatar" placeholder="Please select picture" class="form-control"></div><div>
+                                        <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Modify</strong></button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-sm-6">
+                                <h4>After modifying the information</h4><p>Will update!</p><p class="text-center">
+                                    <i class="fa fa-sign-in big-icon"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    <div class="row">
+    <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>The e-book I uploaded</h5></div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-sm-5 m-b-xs">
+                                <a class="btn btn-sm btn-primary" href="/add_ebook">Added e-book</a></div>
+                            <form action="/accounts/my_info" method="get">
+                            <div class="col-sm-7">
+                                <div class="input-group">
+
+                                    <input name="key" type="text" placeholder="Please enter the keyword" class="input-sm form-control"><span class="input-group-btn"><button type="submit" class="btn btn-sm btn-primary"> Search</button></span>
+
+                                </div>
+                            </div>
+                                </form>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <head>
+                                    <tr>
+
+                                        <th>E-book title</th><th>Author</th><th> Type</th><th>Operation</th></tr>
+                                </head>
+                                <tbody>
+                                    {% for ebook in ebooks %}
+                                        <tr id="t{{ ebook.id }}">
+
+                                            <td><a href="/article_detail?id={{ ebook.id }}">{{ ebook.title }}</a></td>
+
+                                            <td>{{ ebook.author }}</td>
+                                            <td>{{ ebook.atype.name }}</td>
+                                            <td>
+                                                <a href="/modify_ebook?id={{ ebook.id }}"><button class="btn btn-xs btn-info">Modify</button></a>
+                                                <button onclick="delete1('{{ ebook.id }}')" class="btn btn-xs btn-info">Delete</button></td>
+                                        </tr>
+                                    {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    <!--Next Page--><script>function delete1(wid) {
+            var csrf = "{{ csrf_token }}"
+            layer.confirm('Can you confirm the deletion? It cannot be retrieved after deletion!', {
+              btn: ['Confirm','Cancel'] //Button
+            }, function(){
+                $.ajax({
+                      type: 'POST',
+                      url: '/delete_ebook',
+                      data: JSON.stringify({"id":wid, "csrfmiddlewaretoken":csrf}),
+                      dataType: "json",
+                      contentType: 'application/json;charset=utf-8',
+                      success: function(data) {
+                        if(data.status == "0"){
+                            $("#t"+wid).remove();
+                            layer.closeAll()
+
+                        }else{
+                            //The server failed to delete, prompt error message, refresh the page
+                            layer.msg(data.data)
+                        }
+                      },
+                      error: function(xhr) {
+                            //Exception occurred in the middle, check xhr.responseText
+                          layer.msg("failed")
+                      }
+
+                    });
+            });
+
+        }</script>
+
+{% endblock %}

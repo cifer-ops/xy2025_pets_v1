@@ -1,0 +1,17 @@
+[Unit]
+Description=Gunicorn daemon for XY Pets Adoption Platform
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/xy_pets
+ExecStart=/var/www/xy_pets/venv/bin/gunicorn \
+          --access-logfile - \
+          --workers 3 \
+          --bind unix:/var/www/xy_pets/xy_pets.sock \
+          xy_pets.wsgi:application \
+          --env DJANGO_SETTINGS_MODULE=xy_pets.production_settings
+
+[Install]
+WantedBy=multi-user.target 

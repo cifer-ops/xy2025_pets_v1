@@ -181,8 +181,7 @@ class UserProfile(AbstractUser):
     mobile = models.CharField(max_length=11, default='')
 
     class Meta:
-        verbose_name = "用户信息"
-        verbose_name_plural = verbose_name
+verbose_name = "User Information"        verbose_name_plural = verbose_name
         ordering = ['-id']
 
     def __str__(self):
@@ -207,20 +206,9 @@ Key implementation features:
 Code example (PetsInfo Model):
 ```python
 class PetsInfo(models.Model):
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name='用户')
-    showimg = models.FileField(upload_to='petimg/', default='', verbose_name='宠物展示图片')
-    name = models.CharField(max_length=100, verbose_name='宠物昵称')
-    intro = models.TextField(verbose_name='宠物介绍')
-    area = models.CharField(max_length=100, verbose_name='所在地区')
-    atype = models.ForeignKey(PetsType, on_delete=models.CASCADE, verbose_name='宠物类型')
-    age = models.IntegerField(default=0, verbose_name='宠物年龄')
-    status = models.IntegerField(choices=PET_STATUS, default=0, verbose_name='宠物状态')
-    updated = models.DateTimeField(auto_now=True, verbose_name='更新时间')
-    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
-
+user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name='user')showimg = models.FileField(upload_to='petimg/', default='', verbose_name='pet display picture')name = models.CharField(max_length=100, verbose_name='pet nickname')intro = models.TextField(verbose_name='Pet introduction')area = models.CharField(max_length=100, verbose_name='Region')atype = models.ForeignKey(PetsType, on_delete=models.CASCADE, verbose_name='pet type')age = models.IntegerField(default=0, verbose_name='pet age')status = models.IntegerField(choices=PET_STATUS, default=0, verbose_name='Pet Status')updated = models.DateTimeField(auto_now=True, verbose_name='Update time')create_time = models.DateTimeField(auto_now_add=True, verbose_name='create time')
     class Meta:
-        verbose_name = '宠物信息'
-        verbose_name_plural = verbose_name
+verbose_name = 'pet information'        verbose_name_plural = verbose_name
         ordering = ['-create_time']
 
     def __str__(self):

@@ -1,8 +1,6 @@
 #!/usr/bin/env python
-"""
-一个非常简单的测试脚本，只测试PetsInfo和PetsType模型的最基本功能
-不依赖Django测试框架，实现最小的测试依赖
-"""
+"""A very simple test script that only tests the most basic functions of PetsInfo and PetsType models
+No dependency on the Django test framework, implementing minimal test dependencies"""
 import sys
 import os
 import django
@@ -10,11 +8,11 @@ from django.conf import settings
 import unittest
 import uuid
 
-# 配置Django环境
+# Configure the Django environment
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(BASE_DIR)
 
-# 极简配置，只包含必要的设置
+# Minimalist configuration, including only necessary settings
 config = {
     'DEBUG': True,
     'INSTALLED_APPS': [
@@ -32,26 +30,26 @@ config = {
     'AUTH_USER_MODEL': 'accounts.UserProfile',
 }
 
-print("配置Django环境...")
-# 应用配置
+print("Configure the Django environment...")
+# Application configuration
 settings.configure(**config)
 django.setup()
 
-# 导入要测试的模型
+# Import the model to be tested
 from accounts.models import UserProfile
 from pets.models import PetsType, PetsInfo
 
 class PetsModelSimpleTest(unittest.TestCase):
-    """宠物模型的简单测试"""
+    """Simple test of pet model"""
     
     def setUp(self):
-        """设置测试数据"""
-        print("\n设置测试数据...")
-        # 确保数据库表已创建
+        """Set up test data"""
+        print("\nSet test data...")
+        # Make sure the database table is created
         from django.core.management import call_command
         call_command('migrate', verbosity=0)
         
-        # 创建唯一的测试用户
+        # Create a unique test user
         unique_suffix = str(uuid.uuid4())[:8]
         self.username = f'testuser_{unique_suffix}'
         self.user = UserProfile.objects.create_user(
@@ -59,14 +57,14 @@ class PetsModelSimpleTest(unittest.TestCase):
             password='testpassword123',
             mobile=f'138{unique_suffix}'
         )
-        print(f"创建了测试用户: {self.username}")
+        print(f"Created test user: {self.username}")
         
-        # 创建宠物类型
+        # Create a pet type
         self.pet_type_name = "Dog"
         self.pet_type = PetsType.objects.create(name=self.pet_type_name)
-        print(f"创建了宠物类型: {self.pet_type_name}")
+        print(f"Created pet type: {self.pet_type_name}")
         
-        # 创建宠物信息
+        # Create pet information
         self.pet_name = f"Buddy_{unique_suffix}"
         self.pet = PetsInfo.objects.create(
             user=self.user,
@@ -77,31 +75,31 @@ class PetsModelSimpleTest(unittest.TestCase):
             age=3,
             status=0
         )
-        print(f"创建了宠物: {self.pet_name}")
+        print(f"Pet created: {self.pet_name}")
     
     def test_pet_creation(self):
-        """测试宠物创建"""
-        print("执行测试: test_pet_creation")
+        """Test pet creation"""
+        print("Execute test: test_pet_creation")
         self.assertEqual(self.pet.name, self.pet_name)
         self.assertEqual(self.pet.intro, "A friendly dog")
         self.assertEqual(self.pet.area, "Beijing")
         self.assertEqual(self.pet.age, 3)
         self.assertEqual(self.pet.atype.name, self.pet_type_name)
         self.assertEqual(self.pet.status, 0)
-        print("测试通过: 宠物创建功能正常工作")
+        print("Test passed: The pet creation function works normally")
     
     def test_pet_str_method(self):
-        """测试宠物字符串表示"""
-        print("执行测试: test_pet_str_method")
+        """Test pet string representation"""
+        print("Execute test: test_pet_str_method")
         self.assertEqual(str(self.pet), self.pet_name)
-        print("测试通过: 宠物字符串表示方法正常工作")
+        print("Test passed: The pet string representation method works normally")
     
     def test_pet_type_str_method(self):
-        """测试宠物类型字符串表示"""
-        print("执行测试: test_pet_type_str_method")
+        """Test pet type string representation"""
+        print("Execute test: test_pet_type_str_method")
         self.assertEqual(str(self.pet_type), self.pet_type_name)
-        print("测试通过: 宠物类型字符串表示方法正常工作")
+        print("Test passed: The pet type string representation method works normally")
 
 if __name__ == '__main__':
-    print("开始测试...")
+    print("Start testing...")
     unittest.main(verbosity=2) 
